@@ -57,34 +57,33 @@ public class ProdutoService {
 
 		return mapper.entityToDTO(produtoRepository.save(produto));
 	}
-	
-	public Page<ProdutoCategoriaResponseDto> buscarProdutosPorNomeIdCategoria(String nomeProduto, Long idCategoria, Pageable pageable){
+
+	public Page<ProdutoCategoriaResponseDto> buscarProdutosPorNomeIdCategoria(String nomeProduto, Long idCategoria,
+			Pageable pageable) {
 		log.info("Busca produtos por nome e id da categoria: '{}';'{}'", nomeProduto, idCategoria);
-		Page<Produto> pageProduto = produtoRepository.findByNomeContainingIgnoreCaseAndCategoriaId(nomeProduto, idCategoria, pageable);
+		Page<Produto> pageProduto = produtoRepository.findByNomeContainingIgnoreCaseAndCategoriaId(nomeProduto,
+				idCategoria, pageable);
 		if (pageProduto.isEmpty()) {
 			throw new ObjNaoEncontradoException("Nenhum registro encontrado");
 		}
 		return mapper.mapEntityPageToDto(pageable, pageProduto);
 	}
 
-	public Page<ProdutoCategoriaResponseDto> buscarProdutosPorCategoria(Long idCategoria, Pageable pageable ) {
+	public Page<ProdutoCategoriaResponseDto> buscarProdutosPorCategoria(Long idCategoria, Pageable pageable) {
 		log.info("Busca produtos por categoria de código: '{}'", idCategoria);
-		
+
 		Page<Produto> pageProduto = produtoRepository.findByCategoriaId(idCategoria, pageable);
-		
+
 		if (pageProduto.isEmpty()) {
 			throw new ObjNaoEncontradoException("Nenhum produto encontrado pra esta categoria");
 		}
 
 		return mapper.mapEntityPageToDto(pageable, pageProduto);
 	}
-	
-	
+
 	public QtdProdutosCategoriaResponseDto quantidadeProdutosPorCategoria(Long idCategoria) {
 		log.info("Busca a quantidade de produtos por categoria: ID da Categoria: '{}'", idCategoria);
-		QtdProdutosCategoriaResponseDto qtd = produtoRepository.buscarQuantidadeProdutosPorCategoria(idCategoria);
-		return qtd;
+		return produtoRepository.buscarQuantidadeProdutosPorCategoria(idCategoria);
 	}
-	
-	
+
 }
