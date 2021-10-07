@@ -51,6 +51,11 @@ public class CategoriaController {
 		return ResponseEntity.created(location).build();
 	}
 
+	/**
+	 * @author emanuel.sousa
+	 * @param id
+	 * @return URI
+	 */
 	private URI getUri(Long id) {
 		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
 	}
