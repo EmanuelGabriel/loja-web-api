@@ -82,7 +82,7 @@ public class ProdutoService {
 	}
 
 	public QtdProdutosCategoriaResponseDto quantidadeProdutosPorCategoria(Long idCategoria) {
-		log.info("Busca a quantidade de produtos por categoria: ID da Categoria: '{}'", idCategoria);
+		log.info("Busca a quantidade de produtos por categoria ID da Categoria: '{}'", idCategoria);
 		return produtoRepository.buscarQuantidadeProdutosPorCategoria(idCategoria);
 	}
 
