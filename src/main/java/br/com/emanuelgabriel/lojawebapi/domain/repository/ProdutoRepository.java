@@ -15,9 +15,15 @@ import br.com.emanuelgabriel.lojawebapi.domain.repository.customers.ProdutoRepos
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>, ProdutoRepositoryCustom {
+	
+	@Query(value = "SELECT p FROM Produto p JOIN FETCH p.categoria cat WHERE cat.id = :idCategoria", 
+			countQuery = "SELECT count(p) FROM Produto p LEFT JOIN p.categoria cat WHERE cat.id = :idCategoria")
+	Page<Produto> buscarProdutosPorCategoria(@Param(value = "idCategoria") Long idCategoria, Pageable pageable);
+	
 
-//	@Query(value = "SELECT p FROM Produto p JOIN FETCH p.categoria c WHERE c.id = :idCategoria")
-//	Page<Produto> buscarProdutosPorCategoria(@Param(value = "idCategoria") Long idCategoria, Pageable pageable);
+	@Query(value = "SELECT p FROM Produto p ORDER BY p.nome", 
+			countQuery = "SELECT count(p) FROM Produto p GROUP BY p.nome ORDER BY p.nome")
+	Page<Produto> buscarTodos(Pageable pageable);
 
 	Page<Produto> findByCategoriaId(Long idCategoria, Pageable pageable);
 
@@ -30,8 +36,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>, Produto
 
 	@Query(value = "SELECT prod.nome, SUM(item.quantidade), MAX(ped.dataPedido) FROM Pedido ped JOIN ped.itensPedido item JOIN item.produto prod GROUP BY prod.nome ORDER BY item.quantidade DESC")
 	List<Object[]> relatorioVendasPorProdutosVendidos();
-	
-	// SELECT new br.com.alura.loja.dto.VendasPorDia(produto.nome, sum(pedido.valorTotal), pedido.data) 
-	// FROM Pedido pedido join pedido.itens itens join itens.produto produto group by produto.nome, pedido.data
 
 }

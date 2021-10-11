@@ -38,9 +38,18 @@ public class ProdutoService {
 	@Autowired
 	private ProdutoModelMapper mapper;
 
+	public Page<ProdutoCategoriaResponseDto> buscarProdPorCategorias(Long idCategoria, Pageable pageable) {
+		log.info("TESTE {}-{}", idCategoria, pageable);
+		var pageProduto = produtoRepository.buscarProdutosPorCategoria(idCategoria, pageable);
+		if (pageProduto.isEmpty()) {
+			throw new ObjNaoEncontradoException("Nenhum registro encontrado");
+		}
+		return mapper.mapEntityPageToPageDTO(pageable, pageProduto);
+	}
+	
 	public Page<ProdutoResponseDto> buscarTodos(Pageable pageable) {
 		log.info("Busca todos os produtos cadastrados: {}", pageable);
-		Page<Produto> pageProduto = produtoRepository.findAll(pageable);
+		Page<Produto> pageProduto = produtoRepository.buscarTodos(pageable); //findAll(pageable);
 		return mapper.mapEntityPageToDTO(pageable, pageProduto);
 	}
 

@@ -41,6 +41,14 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService produtoService;
 
+	@GetMapping(value = "{idCategoria}/teste")
+	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdPorCateg(@PathVariable Long idCategoria, Pageable pageable) {
+		log.info("GET /v1/produtos/teste {}-{}", idCategoria, pageable);
+		var pageProduto = produtoService.buscarProdPorCategorias(idCategoria, pageable);
+		return pageProduto != null ? ResponseEntity.ok().body(pageProduto) : ResponseEntity.ok().build();
+	}
+
+	
 	@GetMapping
 	public ResponseEntity<Page<ProdutoResponseDto>> buscarTodos(Pageable pageable) {
 		log.info("GET /v1/produtos {}", pageable);

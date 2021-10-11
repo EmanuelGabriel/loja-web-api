@@ -18,8 +18,8 @@ public class ProdutoCategoriaResponseDto {
 	private String nome;
 	private String descricao;
 	private BigDecimal preco;
-
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataCadastro;
+	private CategoriaResponseDto categoria;
 
 }

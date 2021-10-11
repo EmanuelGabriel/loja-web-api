@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoResponseDto {
+public class ProdutoPorCategoriaResponseDto {
 
 	private Long id;
 	private String nome;
@@ -20,5 +20,6 @@ public class ProdutoResponseDto {
 	private BigDecimal preco;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataCadastro;
+	private CategoriaResponseDto categoria;
 
 }

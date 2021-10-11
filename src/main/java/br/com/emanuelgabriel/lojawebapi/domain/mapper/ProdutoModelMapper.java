@@ -103,6 +103,20 @@ public class ProdutoModelMapper {
 		return new PageImpl<>(listDtos, pageable, pageProduto.getTotalElements());
 	}
 
+	public Page<ProdutoCategoriaResponseDto> mapEntityPageToPageDTO(Pageable pageable, Page<Produto> pageProduto) {
+		List<ProdutoCategoriaResponseDto> listDtos = mapListEntityToDTO(pageProduto.getContent());
+		return new PageImpl<>(listDtos, pageable, pageProduto.getTotalElements());
+	}
+
+	public List<ProdutoCategoriaResponseDto> mapListEntityToDTO(List<Produto> produtos) {
+		return produtos.stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+	}
+
+	public ProdutoCategoriaResponseDto mapEntityToDTO(Produto entity) {
+		return modelMapper.map(entity, ProdutoCategoriaResponseDto.class);
+	}
+	
+
 	/**
 	 * @author emanuel.sousa
 	 * @param pageable
