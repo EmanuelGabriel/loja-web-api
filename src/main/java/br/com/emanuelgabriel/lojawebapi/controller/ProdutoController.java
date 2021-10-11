@@ -58,26 +58,31 @@ public class ProdutoController {
 	}
 
 	@GetMapping(value = "{idCategoria}/produtos-por-categoria")
-	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdutosPorCategoria(@PathVariable Long idCategoria, Pageable pageable ) {
+	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdutosPorCategoria(@PathVariable Long idCategoria,
+			Pageable pageable) {
 		log.info("GET /v1/produtos/{}/produtos-por-categoria", idCategoria);
-		Page<ProdutoCategoriaResponseDto> pageProdutoDto = produtoService.buscarProdutosPorCategoria(idCategoria, pageable);
+		Page<ProdutoCategoriaResponseDto> pageProdutoDto = produtoService.buscarProdutosPorCategoria(idCategoria,
+				pageable);
 		return pageProdutoDto != null ? ResponseEntity.ok().body(pageProdutoDto) : ResponseEntity.notFound().build();
 	}
-	
+
 	@GetMapping(value = "/produtos-categoria")
-	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdutosPorCategoria(@RequestParam(value = "nomeProduto") String nomeProduto, @RequestParam(value = "idCategoria") Long idCategoria, Pageable pageable ) {
+	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdutosPorCategoria(
+			@RequestParam(value = "nomeProduto") String nomeProduto,
+			@RequestParam(value = "idCategoria") Long idCategoria, Pageable pageable) {
 		log.info("GET /v1/produtos/{}/{}/produtos-categoria", nomeProduto, idCategoria);
-		Page<ProdutoCategoriaResponseDto> pageProdutoDto = produtoService.buscarProdutosPorNomeIdCategoria(nomeProduto, idCategoria, pageable);
+		Page<ProdutoCategoriaResponseDto> pageProdutoDto = produtoService.buscarProdutosPorNomeIdCategoria(nomeProduto,
+				idCategoria, pageable);
 		return pageProdutoDto != null ? ResponseEntity.ok().body(pageProdutoDto) : ResponseEntity.notFound().build();
 	}
-	
+
 	@GetMapping(value = "{idCategoria}/quantidade-produtos-por-categoria")
-	public ResponseEntity<QtdProdutosCategoriaResponseDto> buscarQuantidadeProdutosPorCategoria(@PathVariable Long idCategoria) {
+	public ResponseEntity<QtdProdutosCategoriaResponseDto> buscarQuantidadeProdutosPorCategoria(
+			@PathVariable Long idCategoria) {
 		log.info("GET /v1/produtos/{}/quantidade-produtos-por-categoria", idCategoria);
 		QtdProdutosCategoriaResponseDto quantidade = produtoService.quantidadeProdutosPorCategoria(idCategoria);
 		return ResponseEntity.ok(quantidade);
 	}
-	
 
 	private URI getUri(Long id) {
 		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
