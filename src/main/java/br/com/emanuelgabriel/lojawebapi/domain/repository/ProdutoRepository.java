@@ -17,17 +17,18 @@ import br.com.emanuelgabriel.lojawebapi.domain.repository.customers.ProdutoRepos
 public interface ProdutoRepository extends JpaRepository<Produto, Long>, ProdutoRepositoryCustom {
 	
 	@Query(value = "SELECT p FROM Produto p JOIN FETCH p.categoria cat WHERE cat.id = :idCategoria", 
-			countQuery = "SELECT count(p) FROM Produto p LEFT JOIN p.categoria cat WHERE cat.id = :idCategoria")
+			countQuery = "SELECT COUNT(p) FROM Produto p LEFT JOIN p.categoria cat WHERE cat.id = :idCategoria")
 	Page<Produto> buscarProdutosPorCategoria(@Param(value = "idCategoria") Long idCategoria, Pageable pageable);
 	
-
 	@Query(value = "SELECT p FROM Produto p ORDER BY p.nome", 
-			countQuery = "SELECT count(p) FROM Produto p GROUP BY p.nome ORDER BY p.nome")
+			countQuery = "SELECT COUNT(p) FROM Produto p GROUP BY p.nome ORDER BY p.nome")
 	Page<Produto> buscarTodos(Pageable pageable);
 
 	Page<Produto> findByCategoriaId(Long idCategoria, Pageable pageable);
 
-	Page<Produto> findByNomeContainingIgnoreCaseAndCategoriaId(String nomeProduto, Long idCategoria, Pageable pageable);
+	@Query(value = "SELECT p FROM Produto p JOIN FETCH p.categoria cat WHERE UPPER(p.nome) LIKE UPPER(concat('%', :nomeProduto, '%')) AND cat.id = :idCategoria", 
+			countQuery = "SELECT COUNT(p) FROM Produto p GROUP BY p.nome")
+	Page<Produto> buscarPorNomeProdutoAndIdCategoria(@Param("nomeProduto") String nomeProduto, @Param("idCategoria") Long idCategoria, Pageable pageable); 
 
 	Integer countByCategoriaId(Long categoriaID);
 

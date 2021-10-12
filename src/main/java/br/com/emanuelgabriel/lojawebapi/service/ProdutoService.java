@@ -70,8 +70,7 @@ public class ProdutoService {
 	public Page<ProdutoCategoriaResponseDto> buscarProdutosPorNomeIdCategoria(String nomeProduto, Long idCategoria,
 			Pageable pageable) {
 		log.info("Busca produtos por nome e id da categoria: '{}';'{}'", nomeProduto, idCategoria);
-		Page<Produto> pageProduto = produtoRepository.findByNomeContainingIgnoreCaseAndCategoriaId(nomeProduto,
-				idCategoria, pageable);
+		Page<Produto> pageProduto = produtoRepository.buscarPorNomeProdutoAndIdCategoria(nomeProduto, idCategoria, pageable);
 		if (pageProduto.isEmpty()) {
 			throw new ObjNaoEncontradoException("Nenhum registro encontrado");
 		}
@@ -79,9 +78,9 @@ public class ProdutoService {
 	}
 
 	public Page<ProdutoCategoriaResponseDto> buscarProdutosPorCategoria(Long idCategoria, Pageable pageable) {
-		log.info("Busca produtos por categoria de código: '{}'", idCategoria);
+		log.info("Busca produtos por categoria de código: '{}-{}'", idCategoria, pageable);
 
-		Page<Produto> pageProduto = produtoRepository.findByCategoriaId(idCategoria, pageable);
+		Page<Produto> pageProduto = produtoRepository.buscarProdutosPorCategoria(idCategoria, pageable); //findByCategoriaId(idCategoria, pageable);
 
 		if (pageProduto.isEmpty()) {
 			throw new ObjNaoEncontradoException("Nenhum produto encontrado pra esta categoria");

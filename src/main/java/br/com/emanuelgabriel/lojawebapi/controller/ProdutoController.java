@@ -66,11 +66,9 @@ public class ProdutoController {
 	}
 
 	@GetMapping(value = "{idCategoria}/produtos-por-categoria")
-	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdutosPorCategoria(@PathVariable Long idCategoria,
-			Pageable pageable) {
+	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdutosPorCategoria(@PathVariable Long idCategoria, Pageable pageable) {
 		log.info("GET /v1/produtos/{}/produtos-por-categoria", idCategoria);
-		Page<ProdutoCategoriaResponseDto> pageProdutoDto = produtoService.buscarProdutosPorCategoria(idCategoria,
-				pageable);
+		Page<ProdutoCategoriaResponseDto> pageProdutoDto = produtoService.buscarProdutosPorCategoria(idCategoria, pageable);
 		return pageProdutoDto != null ? ResponseEntity.ok().body(pageProdutoDto) : ResponseEntity.notFound().build();
 	}
 
@@ -78,7 +76,7 @@ public class ProdutoController {
 	public ResponseEntity<Page<ProdutoCategoriaResponseDto>> buscarProdutosPorCategoria(
 			@RequestParam(value = "nomeProduto") String nomeProduto,
 			@RequestParam(value = "idCategoria") Long idCategoria, Pageable pageable) {
-		log.info("GET /v1/produtos/{}/{}/produtos-categoria", nomeProduto, idCategoria);
+		log.info("GET /v1/produtos/produtos-categoria '{}-{}'", nomeProduto, idCategoria);
 		Page<ProdutoCategoriaResponseDto> pageProdutoDto = produtoService.buscarProdutosPorNomeIdCategoria(nomeProduto,
 				idCategoria, pageable);
 		return pageProdutoDto != null ? ResponseEntity.ok().body(pageProdutoDto) : ResponseEntity.notFound().build();
