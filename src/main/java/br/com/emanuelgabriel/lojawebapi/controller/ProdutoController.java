@@ -25,6 +25,7 @@ import br.com.emanuelgabriel.lojawebapi.domain.dto.response.ProdutoCategoriaResp
 import br.com.emanuelgabriel.lojawebapi.domain.dto.response.ProdutoResponseDto;
 import br.com.emanuelgabriel.lojawebapi.domain.dto.response.QtdProdutosCategoriaResponseDto;
 import br.com.emanuelgabriel.lojawebapi.service.ProdutoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 
+@Tag(name = "Produtos", description = "Recursos que gerencia produtos")
 @Slf4j
 @RestController
 @RequestMapping(value = "/v1/produtos", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.emanuelgabriel.lojawebapi.domain.dto.vo.RelatorioVendasPedidoVODto;
 import br.com.emanuelgabriel.lojawebapi.domain.dto.vo.RelatorioVendasPorDiaVODto;
 import br.com.emanuelgabriel.lojawebapi.service.RelatorioProdutosService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 
+@Tag(name = "Relatórios", description = "Recursos que gerencia relatórios")
 @Slf4j
 @RestController
 @RequestMapping(value = "/v1/relatorios", produces = MediaType.APPLICATION_JSON_VALUE)

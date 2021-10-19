@@ -56,6 +56,11 @@ public class CategoriaModelMapper {
 		return categorias.stream().map(this::entityToDTO).collect(Collectors.toList());
 	}
 
+    /**
+     * @author emanuel.sousa
+     * @param categorias
+     * @return 
+     */
 	public List<Categoria> listDtoToEntity(List<CategoriaResponseDto> categorias) {
 		return categorias.stream().map(this::dtoToEntity).collect(Collectors.toList());
 	}

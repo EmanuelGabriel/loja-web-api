@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.emanuelgabriel.lojawebapi.domain.dto.request.CategoriaRequestDto;
 import br.com.emanuelgabriel.lojawebapi.domain.dto.response.CategoriaResponseDto;
 import br.com.emanuelgabriel.lojawebapi.service.CategoriaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -27,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 
+
+@Tag(name = "Categorias", description = "Recursos que gerencia categorias")
 @Slf4j
 @RestController
 @RequestMapping(value = "/v1/categorias", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,6 +53,13 @@ public class CategoriaController {
 		var categoriaResponse = categoriaService.criar(request);
 		URI location = getUri(categoriaResponse.getId());
 		return ResponseEntity.created(location).build();
+	}
+	
+	@GetMapping(value = "{idCategoria}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CategoriaResponseDto> buscarPorId(@PathVariable Long idCategoria) {
+		log.info("GET /v1/categorias/{}", idCategoria);
+		var categoria = categoriaService.buscarPorId(idCategoria);
+		return categoria != null ? ResponseEntity.ok().body(categoria) : ResponseEntity.notFound().build();
 	}
 
 	/**
